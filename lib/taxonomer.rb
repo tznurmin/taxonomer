@@ -4,15 +4,15 @@
 
 ##
 # Taxonomer is a text augmentation tool that switches species and strain names.
-# It detects taxonomic species names automatically and exchanges them into
+# It detects taxonomic species names automatically and exchanges them with
 # other valid taxonomic species names. Strain names need to be specified and
 # are replaced by randomly generated strain names that retain the form of the
-# original strain names (letters are exchanged into similar letters and numbers
-# into numbers).
+# original names (letters are exchanged with other similar letters and numbers
+# with other numbers).
 class Taxonomer
   
   ##
-  # Array of currently available (unused) species names. Use +species_list.last+ if you need to peek which name is used next.
+  # Array of currently available (unused) species names. Use +species_list.last+ if you need to peek which name will be used next.
   attr_reader :species_list
   
   ##
@@ -34,7 +34,7 @@ class Taxonomer
   end
   
   ##
-  # Regenerates the species list. Typically there are no reasons to call this manually.
+  # Regenerates the species list. Typically there is no reason to call this manually.
   def _regenerate_list
     @species_list = []
     @all_species.keys.each do |s|
@@ -57,7 +57,7 @@ class Taxonomer
   #
   # (optional string array) +wordlist+: an array of strain names that are replaced in the given text. Defaults to empty.
   #
-  # (optional boolean) +force_diff+: quarantees that each letter is replaced by a different letter. Defaults to false.
+  # (optional boolean) +force_diff+: guarantees that each letter is replaced by a different letter. Defaults to false.
   #
   # (optional string array) +skipped_chars+: a list of characters that are not changed in the strain names. Defaults to Greek letter delta.
   #
@@ -74,7 +74,7 @@ class Taxonomer
   #
   # (string array) +wordlist+: an array of strain names that are replaced in the given text.
   #
-  # (optional boolean) +force_diff+: quarantees that each letter is replaced by a different letter. Defaults to false.
+  # (optional boolean) +force_diff+: guarantees that each letter is replaced by a different letter. Defaults to false.
   #
   # (optional string array) +skipped_chars+: a list of characters that are not changed in the strain names. Defaults to Greek letter delta.
   #

@@ -159,30 +159,30 @@ describe 'Taxonomer' do
      test_string = "Escherichia coli #{test_strain} is a well-known laboratory strain."
      
      tx = Taxonomer.new(specseed: 42)
-     res = tx.obfuscate(test_string.dup, [test_strain], rseed: 42)
+     res = tx.augment(test_string.dup, [test_strain], rseed: 42)
      tx = Taxonomer.new(specseed: 42)
-     res2 = tx.obfuscate(test_string.dup, [test_strain], rseed: 42)
+     res2 = tx.augment(test_string.dup, [test_strain], rseed: 42)
      tx = Taxonomer.new(specseed: 42)
-     res3 = tx.obfuscate(test_string.dup, [test_strain], rseed: 43)
+     res3 = tx.augment(test_string.dup, [test_strain], rseed: 43)
      expect(res == res2).to eq(true)
      expect(res == res3).to eq(false)
      
-     res = @tx.obfuscate(test_string.dup, [test_strain], rseed: 42)
-     res2 = tx.obfuscate(test_string.dup, [test_strain], rseed: 42)
+     res = @tx.augment(test_string.dup, [test_strain], rseed: 42)
+     res2 = tx.augment(test_string.dup, [test_strain], rseed: 42)
      expect(res.split[2] == res2.split[2]).to eq(true)
      
-     res2 = tx.obfuscate(test_string.dup, [test_strain], rseed: 43)
+     res2 = tx.augment(test_string.dup, [test_strain], rseed: 43)
      expect(res.split[2] == res2.split[2]).to eq(false)
      
      tx = Taxonomer.new(specseed: 42)
-     res = tx.obfuscate(test_string.dup, [test_strain], force_diff: true)
+     res = tx.augment(test_string.dup, [test_strain], force_diff: true)
      res.split[2].split('').each_with_index do |c, i|
        expect(c == test_strain[i]).to eq(false)
      end
      
      found = false
      10000.times do
-       res = @tx.obfuscate(test_string.dup, [test_strain])
+       res = @tx.augment(test_string.dup, [test_strain])
        res.split[2].split('').each_with_index do |c, i|
          found = test_strain[i] == c unless found
        end
@@ -194,13 +194,13 @@ describe 'Taxonomer' do
      test_strain = %w[a b c d δ F g H i j Δ k L m n o p q R s t Ρ Σ Τ Υ 4 5 θ ι κ λ μ].join('')
      test_string = "Escherichia coli #{test_strain} is a well-known laboratory strain."
      
-     res = @tx.obfuscate(test_string.dup, [test_strain])
+     res = @tx.augment(test_string.dup, [test_strain])
      ['δ', 'Δ'].each do |c|
        expect(res.split[2].split('')[test_strain.index(c)] == c).to eq(true)
      end
      
      conserved = %w[d L R s Σ Τ 5 κ λ]
-     res = @tx.obfuscate(test_string.dup, [test_strain], skipped_chars: conserved)
+     res = @tx.augment(test_string.dup, [test_strain], skipped_chars: conserved)
      conserved.each do |c|
        expect(res.split[2].split('')[test_strain.index(c)] == c).to eq(true)
      end
@@ -225,13 +225,13 @@ describe 'Taxonomer' do
     it 'Ensures that the input and output texts have same number of words when scrambling is not forced' do
       text = "Escherichia coli K12 is a well-known laboratory strain. However, the same laboratories can study more uncommon E. coli strains, such as the K12-566 or strains from completely different species, such as P. syringae pv. tomato, which is a plant pathogen."
       word_len = text.split.length
-      text = @tx.obfuscate(text, ['K12', 'K12-566', 'pv. tomato'])
+      text = @tx.augment(text, ['K12', 'K12-566', 'pv. tomato'])
       expect(word_len).to eq(text.split.length)
     end
     
     it 'Ensures that the input and output texts have same number of words when scrambling is forced' do
       text = "Escherichia coli K12 is a well-known laboratory strain. However, the same laboratories can study more uncommon E. coli strains, such as the K12-566 or strains from completely different species, such as P. syringae pv. tomato, which is a plant pathogen."
-      text = @tx.obfuscate(text, ['K12', 'K12-566', 'pv. tomato'], force_diff: true)
+      text = @tx.augment(text, ['K12', 'K12-566', 'pv. tomato'], force_diff: true)
       word_len = text.split.length
       expect(word_len).to eq(text.split.length)
     end

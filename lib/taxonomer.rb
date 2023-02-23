@@ -59,10 +59,10 @@ class Taxonomer
   #
   # (optional boolean) +force_diff+: guarantees that each letter is replaced by a different letter. Defaults to false.
   #
-  # (optional string array) +skipped_chars+: a list of characters that are not changed in the strain names. Defaults to Greek letter delta.
+  # (optional string array) +skipped_chars+: a list of characters that are not changed in the strain names. Case sensitive. Defaults to Greek letter delta.
   #
   # (optional integer) +rseed+: random seed value that is used to generate new strain names. Defaults to random.
-  def obfuscate(text, wordlist = [], force_diff: false, skipped_chars: %w[δ Δ], rseed: nil)
+  def augment(text, wordlist = [], force_diff: false, skipped_chars: %w[δ Δ], rseed: nil)
     text = species(text)
     strains(text, wordlist, force_diff: force_diff, skipped_chars: skipped_chars, rseed: rseed)
   end
@@ -76,7 +76,7 @@ class Taxonomer
   #
   # (optional boolean) +force_diff+: guarantees that each letter is replaced by a different letter. Defaults to false.
   #
-  # (optional string array) +skipped_chars+: a list of characters that are not changed in the strain names. Defaults to Greek letter delta.
+  # (optional string array) +skipped_chars+: a list of characters that are not changed in the strain names. Case sensitive. Defaults to Greek letter delta.
   #
   # (optional integer) +rseed+: random seed value that is used to generate new strain names. Defaults to random.
 
